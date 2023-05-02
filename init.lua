@@ -65,6 +65,39 @@ return {
     },
   },
 
+  plugins = {
+    {
+      "jay-babu/mason-nvim-dap.nvim",
+      opts = {
+        handlers = {
+          python = function(source_name)
+            local dap = require "dap"
+            dap.adapters.python = {
+              type = "executable",
+              command = "/Users/luism/Code/DjangoProjects/clientes-data/.venv/bin/python",
+              args = {
+                "-m",
+                "debugpy.adapter",
+              },
+            }
+
+            dap.configurations.python = {
+              {
+                type = "python",
+                request = "launch",
+                python = "/Users/luism/Code/DjangoProjects/clientes-data/.venv/bin/python",
+                name = "Launch file",
+                program = "${workspaceRoot}/manage.py",
+                args = {"clientes"},
+                django = true
+              },
+            }
+          end,
+        },
+      },
+    },
+  },
+
   -- This function is run last and is a good place to configuring
   -- augroups/autocommands and custom filetypes also this just pure lua so
   -- anything that doesn't fit in the normal config locations above can go here
